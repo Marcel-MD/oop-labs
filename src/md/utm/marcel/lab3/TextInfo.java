@@ -43,7 +43,7 @@ public class TextInfo {
     }
 
     private void calculateLetters(String text) {
-        text.replaceAll("[^A-Za-z]+", "");
+        text = text.replaceAll("[^A-Za-z]+", "");
         this.letters = text.length();
         this.vowels = 0;
         this.consonants = 0;
@@ -65,7 +65,7 @@ public class TextInfo {
     }
 
     private void findLongestWord(String text) {
-        text.replaceAll("[^A-Za-z]+", " ");
+        text = text.replaceAll("[^A-Za-z]+", " ");
         String wordArray[] = text.split(" ");
 
         this.longestWord = "";
