@@ -1,8 +1,12 @@
 package md.utm.marcel.lab3;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 public class TextInfo {
     private String text;
     private String longestWord;
+    private Map<String, Integer> topFiveWords;
     private Integer sentences;
     private Integer words;
     private Integer letters;
@@ -27,6 +31,7 @@ public class TextInfo {
         calculateWordsSentences(this.text);
         calculateLetters(this.text);
         findLongestWord(this.text);
+        findTopFiveWords(this.text);
     }
 
     private void calculateWordsSentences(String text) {
@@ -77,11 +82,33 @@ public class TextInfo {
         }
     }
 
+    public void findTopFiveWords(String text) {
+        text = text.replaceAll("[^A-Za-z]+", " ");
+        String wordArray[] = text.split(" ");
+        Map<String, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < wordArray.length; i++) {
+            if (map.get(wordArray[i]) == null) {
+                map.put(wordArray[i], 1);
+            } else {
+                map.put(wordArray[i], map.get(wordArray[i]) + 1);
+            }
+        }
+
+        this.topFiveWords =
+                map.entrySet().stream()
+                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                        .limit(5)
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+    }
+
     @Override
     public String toString() {
-        return "TextInfo {" +
+        return "TextInfo{" +
                 "\n text='" + text + '\'' +
                 ",\n longestWord='" + longestWord + '\'' +
+                ",\n topFiveWords=" + topFiveWords +
                 ",\n sentences=" + sentences +
                 ",\n words=" + words +
                 ",\n letters=" + letters +
