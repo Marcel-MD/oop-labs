@@ -41,6 +41,7 @@ public class Task {
                         "r=" + r +
                         '}';
             }
+
         };
 
         System.out.println(circle.getPerimeter());
